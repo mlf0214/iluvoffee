@@ -1,4 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {JoinTable} from "typeorm";
+import {Flavor} from "./flavor.entity";
 
 @Entity() //sql table===='coffee'
 export class Coffee {
@@ -8,9 +10,18 @@ export class Coffee {
     name:string;
     @Column()
     brand:string;
-    //开启数组支持
-    @Column('json',{nullable:true})
-    flavors:string[]
+    // //开启数组支持
+    // @Column('json',{nullable:true})
+    // flavors:string[]
+
+    @JoinTable()
+    @ManyToMany(type => Flavor,
+        (flavor) => flavor.coffees,
+        {
+            //支持级联插入
+            cascade:true,
+        })
+    flavors:Flavor[]
 }
 
 
