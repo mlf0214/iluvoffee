@@ -22,6 +22,9 @@ export class Coffee {
             cascade:true,
         })
     flavors:Flavor[]
+
+    @Column({default:0})
+    recommendations:number
 }
 
 
